@@ -119,6 +119,28 @@ const navigationConfig = [
         ],
       },
       {
+        id: 'apps.subject',
+        title: 'Subject',
+        type: 'collapse',
+        icon: 'heroicons-outline:book-open',
+        translate: 'SUBJECT',
+        children: [
+          {
+            id: 'subject-subjects',
+            title: 'Subjects',
+            type: 'item',
+            url: 'apps/subjects',
+            end: true,
+          },
+          {
+            id: 'subject-new-subject',
+            title: 'New Subject',
+            type: 'item',
+            url: 'apps/subject/new',
+          },
+        ],
+      },
+      {
         id: 'apps.course',
         title: 'Course',
         type: 'collapse',
@@ -132,12 +154,6 @@ const navigationConfig = [
             url: 'apps/course/courses',
             end: true,
           },
-          // {
-          //   id: 'e-commerce-product-detail',
-          //   title: 'Product Detail',
-          //   type: 'item',
-          //   url: 'apps/e-commerce/products/1/a-walk-amongst-friends-canvas-print',
-          // },
           {
             id: 'course-new-course',
             title: 'New Course',

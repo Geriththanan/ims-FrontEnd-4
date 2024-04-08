@@ -13,19 +13,19 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import withRouter from '@fuse/core/withRouter';
 import FuseLoading from '@fuse/core/FuseLoading';
-import { getCourses, selectCourses, selectCoursesSearchText } from '../store/coursesSlice';
-import CoursesTableHead from './CoursesTableHead';
+import { getSubjects, selectSubjects, selectSubjectsSearchText } from '../store/subjectsSlice';
+import SubjectsTableHead from './SubjectsTableHead';
 
-function CoursesTable(props) {
+function SubjectsTable(props) {
   const dispatch = useDispatch();
 
-  const courses = useSelector(selectCourses);  //select courses from state
-  const searchText = useSelector(selectCoursesSearchText);
+  const subjects = useSelector(selectSubjects);  //select subjects from state
+  const searchText = useSelector(selectSubjectsSearchText);
   const [loading, setLoading] = useState(true);
 
   const [selected, setSelected] = useState([]);
 
-  const [data, setData] = useState(courses);
+  const [data, setData] = useState(subjects);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState({
@@ -35,20 +35,20 @@ function CoursesTable(props) {
 
   useEffect(() => {
     
-    dispatch(getCourses()).then(() => setLoading(false));
+    dispatch(getSubjects()).then(() => setLoading(false));
 
   }, [dispatch]);
 
   useEffect(() => {
     if (searchText.length !== 0) {
       setData(
-        _.filter(courses, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
+        _.filter(subjects, (item) => item.name.toLowerCase().includes(searchText.toLowerCase()))
       );
       setPage(0);
     } else {
-      setData(courses);
+      setData(subjects);
     }
-  }, [courses, searchText]);
+  }, [subjects, searchText]);
 
   function handleRequestSort(event, property) {
     const id = property;
@@ -77,7 +77,7 @@ function CoursesTable(props) {
   }
 
   function handleClick(item) {
-    props.navigate(`/apps/course/courses/${item.id}`);
+    props.navigate(`/apps/subject/${item.id}`);
   }
 
   function handleCheck(event, id) {
@@ -124,7 +124,7 @@ function CoursesTable(props) {
         className="flex flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          There are no courses!
+          There are no subjects!
         </Typography>
       </motion.div>
     );
@@ -134,8 +134,8 @@ function CoursesTable(props) {
     <div className="w-full flex flex-col min-h-full">
       <FuseScrollbars className="grow overflow-x-auto">
         <Table stickyHeader className="min-w-xl" aria-labelledby="tableTitle">
-          <CoursesTableHead
-            selectedCourseIds={selected}
+          <SubjectsTableHead
+            selectedSubjectIds={selected}
             order={order}
             onSelectAllClick={handleSelectAllClick}
             onRequestSort={handleRequestSort}
@@ -221,4 +221,4 @@ function CoursesTable(props) {
   );
 }
 
-export default withRouter(CoursesTable);
+export default withRouter(SubjectsTable);

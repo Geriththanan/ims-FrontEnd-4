@@ -11,6 +11,7 @@ import TasksAppConfig from './tasks/TasksAppConfig';
 import HelpCenterAppConfig from './help-center/HelpCenterAppConfig';
 import ProfileAppConfig from './profile/profileAppConfig';
 import CourseAppConfig from './course/CourseAppConfig';
+import SubjectAppConfig from './subject/SubjectAppConfig';
 
 const appsConfigs = [
   MailboxAppConfig,
@@ -26,6 +27,7 @@ const appsConfigs = [
   HelpCenterAppConfig,
   ProfileAppConfig,
   CourseAppConfig,
+  SubjectAppConfig,
 ];
 
 export default appsConfigs;

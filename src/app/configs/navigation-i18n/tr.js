@@ -11,7 +11,8 @@ const locale = {
   CHAT: 'Sohbet',
   SCRUMBOARD: 'Proje',
   NOTES: 'Notlar',
-  COURSE: "Course"
+  COURSE: "Course",
+  SUBJECT: "Subject"
 };
 
 export default locale;
