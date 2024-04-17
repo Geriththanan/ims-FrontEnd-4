@@ -6,12 +6,39 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { selectSubjectsSearchText, setSubjectsSearchText } from '../store/subjectsSlice';
+import { getSubjects, selectSubjectsSearchText, setSubjectsSearchText } from '../store/subjectsSlice';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { getCourseIdName, selectCourseIdName } from '../store/courseIdNameSlice';
 
 function SubjectsHeader() {
 
   const dispatch = useDispatch();
+  const courses = useSelector(selectCourseIdName);
   const searchText = useSelector(selectSubjectsSearchText);
+
+  const [course, setCourse] = React.useState('');
+
+  const handleChange = (event) => {
+    setCourse(event.target.value);
+  };
+
+  React.useEffect(()=>{
+    dispatch(getCourseIdName());
+  },[dispatch])
+
+
+  React.useEffect(() => {
+     //Dispact getSubjects
+      console.log('course',course);
+      dispatch(getSubjects(course));
+  }, [course]);
+
+  
 
   return (
     <div className="flex flex-col sm:flex-row space-y-16 sm:space-y-0 flex-1 w-full items-center justify-between py-32 px-24 md:px-32">
@@ -24,7 +51,27 @@ function SubjectsHeader() {
     >
       Subjects
     </Typography>
+    <div className="flex flex-col sm:w-auto sm:flex-row space-y-16 sm:space-y-0 flex-1 items-center justify-end space-x-8">
+      {courses && (
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Select Course</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={course}
+            label="Course"
+            onChange={handleChange}
+          >
+            <MenuItem value=''>Select Course</MenuItem>
+            {courses.map((course)=>(
+                <MenuItem value={course.id}>{course.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+      
 
+    </div>
     <div className="flex flex-col w-full sm:w-auto sm:flex-row space-y-16 sm:space-y-0 flex-1 items-center justify-end space-x-8">
       <Paper
         component={motion.div}
@@ -33,7 +80,6 @@ function SubjectsHeader() {
         className="flex items-center w-full sm:max-w-256 space-x-8 px-16 rounded-full border-1 shadow-0"
       >
         <FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
-
         <Input
           placeholder="Search Subjects"
           className="flex flex-1"

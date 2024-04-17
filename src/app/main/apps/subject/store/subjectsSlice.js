@@ -1,11 +1,18 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getSubjects = createAsyncThunk('subjectApp/subjects/getSubjects', async () => {
-  const response = await axios.get('http://ims-backend-4.test/api/subjects');
-  const data = await response.data.subjects;
-  return data;
+export const getSubjects = createAsyncThunk('subjectApp/subjects/getSubjects', 
+  async (courseId) => {
+    const config ={
+      params : {
+        'courseId' : courseId != "" ? courseId : ""
+      }
+    }
+    const response = await axios.get('http://ims-backend-4.test/api/subjects', config);
+    const data = await response.data.subjects;
+    return data;
 });
+
 
 export const removeSubjects = createAsyncThunk(
   'subjectApp/subjects/removeSubjects',
